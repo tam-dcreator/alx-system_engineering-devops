@@ -1,0 +1,2 @@
+#!/bin/bash
+find "$dir" -user guillaume -exec chown betty
