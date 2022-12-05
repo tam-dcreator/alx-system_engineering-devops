@@ -1,2 +1,2 @@
 #!/bin/bash
-awk 'NR==3, NR==$NR {print $0}' ./iacta
+awk 'NR==3 {print $0 }' ./iacta
