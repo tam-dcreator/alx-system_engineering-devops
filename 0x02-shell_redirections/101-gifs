@@ -1,0 +1,2 @@
+#!/bin/bash
+find . -type f -iname "*.gif" -print |tr -d ".gif" |sort -f
