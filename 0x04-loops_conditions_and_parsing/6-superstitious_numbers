@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# A bash script that believes in some more superstitions
+
+i="1"
+
+while [ "$i" -lt 21 ]; do
+    echo $i
+    if [ "$i" -eq 4 ]; then
+	echo "bad luck from China"
+    elif [ "$i" -eq 9 ]; then
+	echo "bad luck from Japan"
+    elif [ "$i" -eq 17 ]; then
+	echo "bad luck from Italy"
+    fi
+
+    ((i++))
+done
