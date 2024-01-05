@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Script that parse Apache logs
+
+INFILE=apache-access.log
+
+awk '{print $1 " " $9}' "$INFILE"
