@@ -3,4 +3,4 @@
 
 INFILE=apache-access.log
 
-awk '{print $1 " " $9}' "$INFILE"
+awk '{print $1, $9}' OFS=" " "$INFILE"
