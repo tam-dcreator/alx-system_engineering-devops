@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Script that groups visitors by IP and HTTP status code and gives number of occurence ordered from greatest to lowest
+
+INFILE=apache-access.log
+
+awk '{ count[$1" "$9]++ } END { for (key in count) { print count[key], key } }' "$INFILE" | sort -nr
