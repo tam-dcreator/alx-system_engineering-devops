@@ -4,3 +4,11 @@ package { 'Flask':
   name     => 'flask',
   provider => 'pip3',
 }
+
+package { 'Werkzeug':
+  ensure   => '2.0.2',
+  name     => 'werkzeug',
+  provider => 'pip3',
+}
+
+# Downgrade werkzeug so its compactible with version 2.1.0 of flask
