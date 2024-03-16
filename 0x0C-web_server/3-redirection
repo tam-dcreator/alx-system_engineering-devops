@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Script to configure nginx to redirect a page
+
+# Snippet to append
+sample='\\n\tlocation /redirect_me {\n\t\treturn 301;\n\t}'
+
+# Path to config file
+path_nginx="/etc/nginx/sites-enabled/default"
+
+sed "/server_name _;/a $sample" "$path_nginx" > default
+mv default "$path_nginx"
+service nginx reload
