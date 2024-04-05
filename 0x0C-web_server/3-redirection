@@ -2,9 +2,9 @@
 # Script to configure nginx to redirect a page
 
 # Update system and install nginx
-sudo apt -y update && sudo apt -y upgrade
-sudo apt install nginx
-sudo service nginx start
+apt -y update && apt -y upgrade
+apt -y install nginx
+service nginx start
 
 # Snippet to append
 sample='\\n\tlocation /redirect_me {\n\t\treturn 301;\n\t}'
