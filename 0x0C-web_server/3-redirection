@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # Script to configure nginx to redirect a page
 
-# Start nginx server
+# Update system, install nginx and start nginx server
+apt install -y update
+apt install -y upgrade
+apt install nginx
 service nginx start
 
 # Snippet to append
