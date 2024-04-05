@@ -2,9 +2,8 @@
 # Script to configure nginx to redirect a page
 
 # Update system, install nginx and start nginx server
-apt install -y update
-apt install -y upgrade
-apt install nginx
+apt -y update && apt -y upgrade
+apt -y install nginx
 service nginx start
 
 # Snippet to append
