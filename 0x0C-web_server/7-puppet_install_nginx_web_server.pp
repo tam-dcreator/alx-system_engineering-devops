@@ -1,8 +1,5 @@
 # Puppet configuration for Nginx
-$str1 = 'server_name _;
-    location /redirect_me {
-        return 301;
-    }'
+$str1 = 'server_name _;\\n\tlocation /redirect_me {\n\treturn 301;\n\t}\n'
 
 # Update system and install nginx
 exec { 'apt-get update; apt-get -y install nginx':
@@ -20,10 +17,10 @@ exec {'Hello':
   provider => shell,
 }
 
-# Set redirection
-exec { 'Redirection':
-  command => "sed -i 's/server_name _;/${str1}/' /etc/nginx/sites-available/default",
-  unless  => "grep -q '${str1}' /etc/nginx/sites-available/default",
+# Set redirection using title instead of command attribute because of char len
+exec { 'sed -i "s/server_name _;/server_name _;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301;\\n\\t}\\n/" /etc/nginx/sites-enabled/default':
+  unless   => "grep -q '${str1}' /etc/nginx/sites-enabled/default",
+  provider => shell,
 }
 
 # Restart Nginx
