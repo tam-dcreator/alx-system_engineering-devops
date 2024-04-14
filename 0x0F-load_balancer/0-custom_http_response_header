@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Script to configure a new ubuntu machine with an nginx custom header
+
+# Update system, install nginx and start nginx
+apt -y update && apt -y upgrade
+apt -y install nginx
+service nginx start
+
+# Add custom header to nginx config
+sed -i "s/server_name _;/server_name _;\\n\tadd_header X-Served-By \$hostname;\\n/" /etc/nginx/sites-enabled/default
+
+nginx -s reload
