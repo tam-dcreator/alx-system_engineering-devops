@@ -1,9 +1,0 @@
-# Creating a file in /tmp directory
-
-file { 'Create School':
-  path    => '/tmp/school',
-  mode    => '0744',
-  owner   => 'www-data',
-  group   => 'www-data',
-  content => 'I love Puppet',
-}

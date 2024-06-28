@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Script to install and configure HAProxy
+
+# Update system and install haproxy
+apt-get -y install --no-install-recommends software-properties-common
+add-apt-repository -y ppa:vbernat/haproxy-2.8
+apt-get -y update
+apt-get -y install haproxy=2.8.\*
+
+# Path to config file
+path_hap="/etc/haproxy/haproxy.cfg"
+
+# Make a config backup if it doesn't exist
+if [ ! -f "$path_hap".orig ]; then
+    cp "$path_hap" "path_hap".orig
+    echo "Haproxy Backup created"
+fi
+
+# Snippet to append
+echo "frontend http
+     bind *:80
+     mode http
+     default_backend nginx_webservers
+
+backend nginx_webservers
+	balance roundrobin
+	server 212504-web-01	54.166.125.55:80 check
+	server 212504-web-02	52.204.41.75:80 check" >> "$path_hap"
+
+service haproxy restart
