@@ -3,29 +3,22 @@
 
 # Update system and install haproxy
 apt-get -y install --no-install-recommends software-properties-common
-add-apt-repository -y ppa:vbernat/haproxy-2.8
-apt-get -y update
+add-apt-repository -y ppa:vbernat/haproxy-2.9
+apt-get -y update && apt-get -y upgrade
 apt-get -y install haproxy=2.9.\*
 
 # Path to config file
 path_hap="/etc/haproxy/haproxy.cfg"
-path_def="/etc/default/haproxy"
 
 # Make a config backup if it doesn't exist
 if [ ! -f "$path_hap".orig ]; then
     cp "$path_hap" "path_hap".orig
-    echo "Haproxy Backup created"
 fi
 
-# Make a default backup if it doesnt exit
-if [ ! -f "$path_def".orig ]; then
-    cp "$path_def" "path_def".orig
-    echo "Haproxy Default Backup created"
-fi
 
 # Snippet to append
-echo "frontend test_frontend
-     bind :80
+echo "frontend http
+     bind *:80
      default_backend nginx_webservers
 
 backend nginx_webservers
@@ -33,6 +26,6 @@ backend nginx_webservers
 	server 212504-web-01	54.87.177.138:80 check
 	server 212504-web-02	52.3.220.168:80 check" >> "$path_hap"
 
-echo "Enabled=1" >> "$path_def"
+echo "Enabled=1" >> /etc/default/haprox
 
-service haproxy start
+sudo service haproxy restart
