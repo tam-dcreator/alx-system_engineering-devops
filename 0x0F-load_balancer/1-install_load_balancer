@@ -36,4 +36,4 @@ backend nginx_webservers
 
 echo "ENABLED=1" >> "$path_def"
 
-service haproxy restart
+service haproxy start
