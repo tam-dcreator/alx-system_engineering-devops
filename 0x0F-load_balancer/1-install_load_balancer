@@ -24,9 +24,8 @@ if [ ! -f "$path_def".orig ]; then
 fi
 
 # Snippet to append
-echo "frontend http
-     bind *:80
-     mode http
+echo "frontend test_frontend
+     bind :80
      default_backend nginx_webservers
 
 backend nginx_webservers
@@ -34,6 +33,6 @@ backend nginx_webservers
 	server 212504-web-01	54.87.177.138:80 check
 	server 212504-web-02	52.3.220.168:80 check" >> "$path_hap"
 
-echo "ENABLED=1" >> "$path_def"
+echo "Enabled=1" >> "$path_def"
 
 service haproxy start
