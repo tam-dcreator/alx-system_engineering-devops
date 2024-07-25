@@ -1,7 +1,8 @@
 # Puppet configuration for custom HTTP header
 
 # Update system and install nginx
-exec { 'apt-get update; apt-get -y install nginx':
+exec {'update':
+  command=>'sudo apt-get update && sudo apt-get -y install nginx',
   path => '/usr/bin',
 }
 
@@ -17,12 +18,14 @@ exec {'Hello':
 }
 
 # Set custom header
-exec { 'sed -i "s/server_name _;/server_name _;\\n\\tadd_header X-Served-By $host;\\n/" /etc/nginx/sites-enabled/default':
+exec {'add_header':
+  environment => ["HOST=${hostname}"],
+  command => 'sudo sed -i "s/server_name _;/server_name _;\\n\\tadd_header X-Served-By $HOST;\\n/" /etc/nginx/sites-enabled/default',
   provider => shell,
 }
 
 # Restart Nginx
 exec {'run':
-  command  => 'service nginx restart',
+  command  => 'sudo service nginx restart',
   provider => shell,
 }
