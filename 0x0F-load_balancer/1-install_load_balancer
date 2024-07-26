@@ -17,15 +17,15 @@ fi
 
 
 # Snippet to append
-sudo echo "frontend http
+echo "frontend http
      bind *:80
      default_backend nginx_webservers
 
 backend nginx_webservers
 	balance roundrobin
 	server 212504-web-01	54.87.177.138:80 check
-	server 212504-web-02	52.3.220.168:80 check" >> "$path_hap"
+	server 212504-web-02	52.3.220.168:80 check" | sudo tee -a "$path_hap"
 
-sudo echo "Enabled=1" >> /etc/default/haprox
+echo "Enabled=1" | sudo tee -a  /etc/default/haprox
 
 sudo service haproxy restart
