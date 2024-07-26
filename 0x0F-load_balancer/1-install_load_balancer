@@ -1,31 +1,13 @@
 #!/usr/bin/env bash
 # Script to install and configure HAProxy
 
-# Update system and install haproxy
-sudo apt-get -y install --no-install-recommends software-properties-common
-sudo add-apt-repository -y ppa:vbernat/haproxy-2.9
-sudo apt-get -y update && apt-get -y upgrade
-sudo apt-get -y install haproxy=2.9.\*
+# Add HAProxy PPA
+sudo apt-get -y install software-properties-common
+sudo add-apt-repository -y ppa:vbernat/haproxy-2.5
+sudo apt-get -y update
 
-# Path to config file
-path_hap="/etc/haproxy/haproxy.cfg"
-
-# Make a config backup if it doesn't exist
-if [ ! -f "$path_hap".orig ]; then
-    sudo cp "$path_hap" "path_hap".orig
-fi
-
-
-# Snippet to append
-echo "frontend http
-     bind *:80
-     default_backend nginx_webservers
-
-backend nginx_webservers
-	balance roundrobin
-	server 212504-web-01	54.87.177.138:80 check
-	server 212504-web-02	52.3.220.168:80 check" | sudo tee -a "$path_hap"
-
-echo "Enabled=1" | sudo tee -a  /etc/default/haprox
-
+# Install HAProxy
+sudo apt-get -y install haproxy
+sudo sed -i -e '$aENABLED=1\n' /etc/default/haproxy
+sudo sed -i -e '$a\listen http-in\n\tbind :80\n\tbalance roundrobin\n\tserver 212504-web-01 54.87.177.138:80 check\n\tserver 212504-web-02 52.3.220.168:80 check\n' /etc/haproxy/haproxy.cfg
 sudo service haproxy restart
